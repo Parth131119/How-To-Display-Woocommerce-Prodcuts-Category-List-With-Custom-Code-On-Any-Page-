@@ -1,0 +1,48 @@
+<section>	
+  
+  <div class="container webpage-container">
+       <div class="header_line col-md-12 no-padding">
+                     <h1 class="home_ttl upper clearfix home_back_img woo_ttl"><?php the_title(); ?></h2>
+       </div> 
+      <div class="service_top_bot">
+              <?php 
+				$args = array(
+					'taxonomy'          => 'product_cat',
+					'orderby'      => 'name',
+                    'pad_counts'   => false,
+                    'hierarchical' => 1,
+                    'hide_empty'   => false
+					);
+				$result = get_terms( $args );
+
+				?>
+
+                    <div class="cat_list_part">
+
+                            <?php
+                            foreach ( $result as $cat ) {
+                                if ( 'Uncategorized' !== $cat->name ) {
+                                $term_link = get_term_link( $cat, 'product_cat' );
+                                $cat_thumb_id = get_woocommerce_term_meta( $cat->term_id, 'thumbnail_id', true );
+                                $shop_catalog_img_arr = wp_get_attachment_image_src( $cat_thumb_id, 'shop_catalog' );
+                                $cat_img = $shop_catalog_img_arr[0];
+                            ?>                                
+                                
+                     <div class="col-md-4 clearfix">
+						<div class="view_dtl clearfix"> <img src="<?php echo $cat_img; ?>" alt="<?php echo $cat->name; ?>" class="img-thumbnail w100" />
+						<div class="view_main_ttl"><a href="<?php echo $term_link; ?>"><div class="view_ttl"><?php echo $cat->name; ?></div><div class="cat_count">(<?php echo $cat->count; ?>)</div> </a></div></div>
+                        						
+                     </div>	
+
+                        <?php
+                            }
+                        }
+                        ?>  
+
+                   </div>
+			  
+               
+			   
+              </div>
+       </div>
+</section> 
